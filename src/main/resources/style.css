@@ -1,0 +1,42 @@
+body {
+  background-color: #f7f8f8;
+  height: auto;
+  width: 100%;
+  max-width: 650px;
+  padding: 5px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex-wrap:wrap;
+  overflow: hidden;
+  align-self: center;
+}
+
+.card {
+  height: auto;
+  width: 100% - 5px;
+  border-radius: 3px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  margin: 3px 5px;
+  color: rgba(90, 92, 107, 0.85);
+  text-align: justify;
+  font-size: 15x;
+  padding: 3px 5px;
+  align-self:stretch;
+}
+
+.comments{
+  display: flex;
+  flex-direction: column;
+  flex-wrap:wrap;
+  text-align: center;
+  justify-content: center;
+}
+
+.back0{
+ background-color: Grey;
+}
+
+.back1{
+ background-color: LightGrey;
+}
