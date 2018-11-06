@@ -23,12 +23,14 @@ public class Form implements HttpHandler{
         String method = httpExchange.getRequestMethod();
 
 
-        // Send a form if it wasn't submitted yet.
         if(method.equals("GET")){
             response = createGetResponse();
+            httpExchange.sendResponseHeaders(200, response.length());
+            OutputStream os = httpExchange.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
         }
 
-        // If the form was submitted, retrieve it's content.
         if(method.equals("POST")){
             InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
             BufferedReader br = new BufferedReader(isr);
@@ -36,13 +38,9 @@ public class Form implements HttpHandler{
             System.out.println(formData);
             Map inputs = parseFormData(formData);
             dao.putComment(createComment(inputs));
-            response = createGetResponse();
+//            response = createGetResponse();
+            httpExchange.sendResponseHeaders(303, 0);
         }
-
-        httpExchange.sendResponseHeaders(200, response.length());
-        OutputStream os = httpExchange.getResponseBody();
-        os.write(response.getBytes());
-        os.close();
     }
 
     private Comment createComment(Map inputs){
@@ -52,7 +50,7 @@ public class Form implements HttpHandler{
     }
 
     private String createGetResponse(){
-        String response = "<html><head><link rel=\"stylesheet\" href=\"style.css\"></head><body>" +
+        String response = "<html><head><link rel=\"stylesheet\" href=\"static/style.css\"></head><body>" +
                 getCommentsHTML() +
                 "<form method=\"POST\" class='card'>\n " +
                 "  First name:<br>\n" +

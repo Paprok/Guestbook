@@ -17,7 +17,7 @@ public class App {
         // set routes
         server.createContext("/hello", new Hello());
         server.createContext("/form", new Form(dao));
-        server.createContext("/style.css", new Static());
+        server.createContext("/static", new Static());
         server.setExecutor(null); // creates a default executor
 
         // start listening
