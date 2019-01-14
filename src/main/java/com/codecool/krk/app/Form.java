@@ -25,7 +25,9 @@ public class Form implements HttpHandler{
 
         if(method.equals("GET")){
             response = createGetResponse();
-            httpExchange.sendResponseHeaders(200, response.length());
+            String encoding = "UTF-8";
+            httpExchange.getResponseHeaders().set("Content-Type", "text/html; charset=" + encoding);
+            httpExchange.sendResponseHeaders(200, 0);
             OutputStream os = httpExchange.getResponseBody();
             os.write(response.getBytes());
             os.close();
@@ -38,7 +40,7 @@ public class Form implements HttpHandler{
             System.out.println(formData);
             Map inputs = parseFormData(formData);
             dao.putComment(createComment(inputs));
-//            response = createGetResponse();
+            httpExchange.getResponseHeaders().add("Location", "/form");
             httpExchange.sendResponseHeaders(303, 0);
         }
     }
@@ -50,9 +52,9 @@ public class Form implements HttpHandler{
     }
 
     private String createGetResponse(){
-        String response = "<html><head><link rel=\"stylesheet\" href=\"static/style.css\"></head><body>" +
+        String response = "<html charset=utf-8><head><link rel=\"stylesheet\" href=\"static/style.css\"></head><body>" +
                 getCommentsHTML() +
-                "<form method=\"POST\" class='card'>\n " +
+                "<form method=\"POST\" class='card' accept-charset=\"utf-8\" >\n " +
                 "  First name:<br>\n" +
                 "  <input type=\"text\" name=\"nick\" value=\"Jon Doe\">\n" +
                 "  <br>\n" +
